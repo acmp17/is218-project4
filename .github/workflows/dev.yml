@@ -1,6 +1,9 @@
 name: Development Workflow 3.8
 
 on:
+  push:
+    branches:
+      - 'amp9-dev'
   pull_request:
     branches:
       - 'master'

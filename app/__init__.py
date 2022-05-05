@@ -41,7 +41,6 @@ def create_app():
     @app.route('/')
     def hello():
         return 'Hello, World!'
-
     return app
 
 @login_manager.user_loader

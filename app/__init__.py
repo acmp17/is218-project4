@@ -13,6 +13,12 @@ def create_app():
     """Create and configure an instance of the Flask application."""
     app = Flask(__name__)
     app.secret_key = 'This is an INSECURE secret!! DO NOT use this in production!!'
+    if app.config["ENV"] == "production":
+        app.config.from_object("app.config.ProductionConfig")
+    elif app.config["ENV"] == "development":
+        app.config.from_object("app.config.DevelopmentConfig")
+    elif app.config["ENV"] == "testing":
+        app.config.from_object("app.config.TestingConfig")
 
     app.register_error_handler(404, page_not_found)
     db_dir = "database/db.sqlite"

@@ -6,9 +6,6 @@ from app.db import db
 from app.db.models import User
 
 
-def page_not_found(e):
-    return render_template("404.html"), 404
-
 def create_app():
     """Create and configure an instance of the Flask application."""
     app = Flask(__name__)
@@ -20,7 +17,6 @@ def create_app():
     elif os.environ.get("FLASK_ENV") == "testing":
         app.config.from_object("app.config.TestingConfig")
 
-    app.register_error_handler(404, page_not_found)
     db_dir = "database/db.sqlite"
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + os.path.abspath(db_dir)
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False

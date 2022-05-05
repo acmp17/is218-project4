@@ -42,9 +42,6 @@ def create_app():
     # add command function to cli commands
     app.cli.add_command(create_database)
 
-    @app.route('/')
-    def hello():
-        return 'Hello, World!'
     return app
 
 @login_manager.user_loader

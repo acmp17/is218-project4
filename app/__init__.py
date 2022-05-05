@@ -1,4 +1,4 @@
-"""A simple flask web app"""
+"""A flask web app"""
 import os
 
 import flask_login

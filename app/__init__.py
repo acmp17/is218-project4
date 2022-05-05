@@ -3,8 +3,13 @@ import os
 
 import flask_login
 from flask import Flask
+from flask_bootstrap import Bootstrap5
+from flask_wtf.csrf import CSRFProtect
+
+from app.auth import auth
 from app.cli import create_database
 from app.db import db
+from app.db import database
 from app.db.models import User
 
 login_manager = flask_login.LoginManager()
@@ -22,6 +27,8 @@ def create_app():
 
     login_manager.init_app(app)
     login_manager.login_view = "auth.login"
+    csrf = CSRFProtect(app)
+    bootstrap = Bootstrap5(app)
 
     db_dir = "database/db.sqlite"
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + os.path.abspath(db_dir)

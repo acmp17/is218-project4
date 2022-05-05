@@ -3,8 +3,15 @@ import os
 
 import flask_login
 from flask import Flask
-from app.cli import create_database
+from flask_bootstrap import Bootstrap5
+from flask_wtf.csrf import CSRFProtect
+
+from app.auth import auth
+from app.cli import create_database, create_log_folder
+from app.context_processors import utility_text_processors
 from app.db import db
+from app.simple_pages import simple_pages
+from app.db import database
 from app.db.models import User
 
 login_manager = flask_login.LoginManager()
@@ -22,17 +29,18 @@ def create_app():
 
     login_manager.init_app(app)
     login_manager.login_view = "auth.login"
+    csrf = CSRFProtect(app)
+    bootstrap = Bootstrap5(app)
 
+    app.register_blueprint(simple_pages)
+    app.register_blueprint(auth)
+    app.register_blueprint(database)
     db_dir = "database/db.sqlite"
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + os.path.abspath(db_dir)
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)
     # add command function to cli commands
     app.cli.add_command(create_database)
-
-    @app.route('/')
-    def hello():
-        return 'Hello, World!'
 
     return app
 

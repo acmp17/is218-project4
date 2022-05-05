@@ -10,6 +10,7 @@ from app.auth import auth
 from app.cli import create_database, create_log_folder
 from app.context_processors import utility_text_processors
 from app.db import db
+from app.simple_pages import simple_pages
 from app.db import database
 from app.db.models import User
 
@@ -31,6 +32,9 @@ def create_app():
     csrf = CSRFProtect(app)
     bootstrap = Bootstrap5(app)
 
+    app.register_blueprint(simple_pages)
+    app.register_blueprint(auth)
+    app.register_blueprint(database)
     db_dir = "database/db.sqlite"
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + os.path.abspath(db_dir)
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False

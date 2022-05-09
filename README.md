@@ -1,1 +1,1 @@
-simple_pages isnt workinggg
+app/__init__.py isn't working

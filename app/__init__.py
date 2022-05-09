@@ -1,7 +1,6 @@
 """A simple flask web app"""
 import logging
 import os
-from logging.handlers import RotatingFileHandler
 
 import flask_login
 from flask import Flask
@@ -13,6 +12,7 @@ from app.auth import auth
 from app.cli import create_database, create_log_folder
 from app.context_processors import utility_text_processors
 from app.db import db
+from app.db import database
 from app.db.models import User
 from app.error_handlers import error_handlers
 from app.logging_config import log_con, LOGGING_CONFIG
@@ -42,6 +42,7 @@ def create_app():
     # these load functions with web interface
     app.register_blueprint(simple_pages)
     app.register_blueprint(auth)
+    app.register_blueprint(database)
     # these load functionality without a web interface
     app.register_blueprint(log_con)
     app.register_blueprint(error_handlers)

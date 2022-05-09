@@ -1,6 +1,6 @@
 """A simple flask web app"""
-import logging
 import os
+import logging
 
 import flask_login
 from flask import Flask

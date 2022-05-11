@@ -25,13 +25,13 @@ def application():
         yield application
         db.session.remove()
         #drops the database tables after the test runs
-        #db.drop_all()
+        db.drop_all()
 
 @pytest.fixture()
 def add_user(application):
     with application.app_context():
         #new record
-        user = User('keith@webizly.com', 'testtest')
+        user = User('amp9@test.com', 'testtest')
         db.session.add(user)
         db.session.commit()
 

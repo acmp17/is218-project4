@@ -13,6 +13,15 @@ class Config(object):
     UPLOAD_FOLDER =  os.getenv('UPLOAD_FOLDER', BASE_DIR + '/uploads')
     GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY','NOKEY')
     LOG_DIR =  os.path.join(BASE_DIR, '../logs')
+    MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.mailtrap.io')
+    MAIL_PORT = 2525
+    MAIL_USERNAME = os.getenv('MAIL_USERNAME', 'NOKEY')
+    MAIL_PASSWORD = os.getenv('MAIL_PASSWORD', 'NOKEY')
+    MAIL_USE_TLS = True
+    MAIL_USE_SSL = False
+    MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER', 'noreply@myapp.com')
+    WTF_CSRF_ENABLED = True
+
 class ProductionConfig(Config):
     pass
 
@@ -20,10 +29,11 @@ class ProductionConfig(Config):
 class DevelopmentConfig(Config):
     DEBUG = True
     SESSION_COOKIE_SECURE = False
-
+    WTF_CSRF_ENABLED = False
 
 class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
     SESSION_COOKIE_SECURE = False
     DEBUG = True
+    WTF_CSRF_ENABLED = False

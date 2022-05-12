@@ -17,42 +17,18 @@ song_user = db.Table('song_user', db.Model.metadata,
     db.Column('song_id', db.Integer, db.ForeignKey('songs.id'))
 )
 
-class Song(db.Model,SerializerMixin):
-    __tablename__ = 'songs'
+class Transactions(db.Model):
+    __tablename__ = 'transactions'
+    __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(300), nullable=True, unique=False)
-    artist = db.Column(db.String(300), nullable=True, unique=False)
-    genre = db.Column(db.String(300), nullable=True, unique=False)
+    amount = db.Column(db.String(300), nullable=True, unique=False)
+    account_type = db.Column(db.String(300), nullable=True, unique=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    user = relationship("User", back_populates="songs", uselist=False)
+    user = relationship("User", back_populates="transactions")
 
-    def __init__(self, title, artist, genre):
-        self.title = title
-        self.artist = artist
-        self.genre = genre
-
-class Location(db.Model, SerializerMixin):
-    __tablename__ = 'locations'
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(300), nullable=True, unique=False)
-    longitude = db.Column(db.String(300), nullable=True, unique=False)
-    latitude = db.Column(db.String(300), nullable=True, unique=False)
-    population = db.Column(db.Integer, nullable=True, unique=False)
-
-
-    def __init__(self, title, longitude, latitude, population):
-        self.title = title
-        self.longitude = longitude
-        self.latitude = latitude
-        self.population = population
-
-    def serialize(self):
-        return {
-            'title': self.title,
-            'long': self.longitude,
-            'lat': self.latitude,
-            'population': self.population,
-        }
+    def __init__(self, amount, account_type):
+        self.amount = amount
+        self.account_type = account_type
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -97,3 +73,12 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.email
+
+    def set_balance(self, new_funds):
+        self.balance = new_funds
+
+    def get_balance(self):
+        return self.balance
+
+    def add_balance(self, new_funds):
+        self.balance = self.balance + new_funds

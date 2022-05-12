@@ -8,7 +8,7 @@ from jinja2 import TemplateNotFound
 from werkzeug.utils import secure_filename, redirect
 
 from app.db import db
-from app.db.models import User, Transactions
+from app.db.models import Transactions
 from app.transactions.forms import csv_upload
 
 transactions = Blueprint('transactions', __name__, template_folder='templates')

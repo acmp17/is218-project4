@@ -1,20 +1,14 @@
 from datetime import datetime
 
 from sqlalchemy import Integer, ForeignKey
-from sqlalchemy.orm import relationship, declarative_base
+from sqlalchemy.orm import relationship
 from werkzeug.security import check_password_hash, generate_password_hash
 from app.db import db
 from flask_login import UserMixin
-from sqlalchemy_serializer import SerializerMixin
-Base = declarative_base()
 
-location_user = db.Table('location_user', db.Model.metadata,
+transaction_user = db.Table('transaction_user', db.Model.metadata,
     db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
-    db.Column('location_id', db.Integer, db.ForeignKey('locations.id'))
-)
-song_user = db.Table('song_user', db.Model.metadata,
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
-    db.Column('song_id', db.Integer, db.ForeignKey('songs.id'))
+    db.Column('transaction_id', db.Integer, db.ForeignKey('transactions.id'))
 )
 
 class Transactions(db.Model):
